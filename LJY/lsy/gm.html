@@ -1,0 +1,175 @@
+<!DOCTYPE html>
+<html lang="ko">
+
+<head>
+
+
+
+
+
+	<meta charset="utf-8">
+	<meta http-equiv="Content-Type" content="text/html; charset=unicode" />
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<meta name="viewport" content="user-scalable=no, width=device-width, height=device-height, initial-scale=1, maximum-scale=1">
+
+
+<script type="text/javascript" src="sh_canvas.js"></script>
+
+<link rel="stylesheet" type="text/css" href="gm.css"/> <!-- CSS속성적용 --> 
+<meta charset="UTF-8">
+<title>면접자 화면</title>
+
+<style type="text/css">
+.bg1 { background-color:#EFEFEF; }
+.bg2 { background-color:#4f4e5c; }
+</style>
+
+<style>
+ input.form-text {
+        border: 1px solid #bcbcbc;
+        width: 50%;
+        height: 20px;
+      }
+
+</style>
+
+
+</head>
+<body>
+
+
+<!-- 화면 전체 레이아웃 -->
+<div class="room" data-room-mode="call" data-user-screenshare="false" data-right-side-on="false" data-subvideo-direction="0">
+<div class="room-wrapper">
+
+<!-- 왼쪽 레이아웃 -->
+<div class="room-menu">
+<div class="bo-detail1">
+ <div class="canv">
+ <canvas id="canvas" width="760" height="800">
+</canvas>
+</div>
+<br/>
+<div>
+<input type="file" id="loadImg" ><br/>
+mode : <span id="mode" ></span><br/>
+
+<input type="button" value="pen" onclick="changeMode(0)" >
+<input type="button" value="line" onclick="changeMode(1)">
+<input type="button" value="rect" onclick="changeMode(2)">
+<input type="button" value="delete" onclick="ccan()"><br>
+<input type="button" value="save" onclick="save()">
+<textarea rows="" cols="" id="data"></textarea>
+ 
+ </div>
+ </div>
+</div>
+
+
+<div class="room-main">
+<div class="room-main-top">
+<form>
+			<p>
+			<a href="#"><img src="com.png" width="50" height="35" onMouseOver="this.className='bg1'" onMouseOut="this.className='bg2'"></a>
+			<a href="#"><img src="screen.png" width="50" height="35" onMouseOver="this.className='bg1'" onMouseOut="this.className='bg2'"></a>
+			<a href="#"><img src="mic.png" width="50" height="35" onMouseOver="this.className='bg1'" onMouseOut="this.className='bg2'"></a>
+			<a href="#"><img src="sound.png" width="50" height="35" onMouseOver="this.className='bg1'" onMouseOut="this.className='bg2'"></a>
+			<a href="#"><img src="set.png" width="50" height="35" onMouseOver="this.className='bg1'" onMouseOut="this.className='bg2'"></a>
+			<a href="#"><img src="end.png" width="50" height="35" onMouseOver="this.className='bg1'" onMouseOut="this.className='bg2'"></a>
+			</p>
+			</form>
+
+</div>
+
+
+<div class="room-con">
+<div class="con1"> 
+<ul class="bo-list-row">
+	    			<li></li>
+	    			<li></li>
+	    			<li></li>
+	    			<li></li>
+	    			<li></li>
+	    			<li></li>
+	    			<li></li>
+	    			<li></li>
+	    			<li></li>
+	    			<li></li>
+	    			<li></li>
+	    			<li></li>
+	    			<li></li>
+					<li>1번 화면</li>
+	
+				
+		    </ul>
+
+
+</div>
+<div class="con2"><ul class="bo-list-row">
+	    			<li></li>
+	    			<li></li>
+	    			<li></li>
+	    			<li></li>
+	    			<li></li>
+	    			<li></li>
+	    			<li></li>
+	    			<li></li>
+	    			<li></li>
+	    			<li></li>
+	    			<li></li>
+	    			<li></li>
+	    			<li></li>
+					<li>2번 화면</li>
+	
+				
+		    </ul></div>
+<div class="con3"><ul class="bo-list-row">
+	    			<li></li>
+	    			<li></li>
+	    			<li></li>
+	    			<li></li>
+	    			<li></li>
+	    			<li></li>
+	    			<li></li>
+	    			<li></li>
+	    			<li></li>
+	    			<li></li>
+	    			<li></li>
+	    			<li></li>
+	    			<li></li>
+					<li>3번 화면</li>
+	
+				
+		    </ul></div>
+<div class="con4"><ul class="bo-list-row">
+	    			<li></li>
+	    			<li></li>
+	    			<li></li>
+	    			<li></li>
+	    			<li></li>
+	    			<li></li>
+	    			<li></li>
+	    			<li></li>
+	    			<li></li>
+	    			<li></li>
+	    			<li></li>
+	    			<li></li>
+	    			<li></li>
+					<li>4번 화면</li>
+	
+				
+		    </ul></div>
+</div>
+
+
+</div>
+
+
+
+
+</div>
+</div>
+
+
+</body>
+</html>
