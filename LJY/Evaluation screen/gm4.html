@@ -1,0 +1,437 @@
+<!DOCTYPE html>
+<html lang="ko">
+
+<head>
+
+<meta charset="utf-8">
+<meta http-equiv="Content-Type" content="text/html; charset=unicode" />
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="user-scalable=no, width=device-width, height=device-height, initial-scale=1, maximum-scale=1">
+
+<script type="text/javascript" src="canvas.js"></script>
+<script type="text/javascript"  src="Timer.js"></script>
+
+<script type="text/javascript"  src="BandwidthHandler.js"></script>
+<script type="text/javascript"  src="screen.js"></script>
+<script type="text/javascript"  src="getScreenId.js"></script>
+ 
+<script type="text/javascript"  src="firebase.js"></script>
+
+ <script>
+            if(!location.hash.replace('#', '').length) {
+                location.href = location.href.split('#')[0] + '#' + (Math.random() * 100).toString().replace('.', '');
+                location.reload();
+            }
+        </script>
+
+        <style>
+            video {
+                -moz-transition: all 1s ease;
+                -ms-transition: all 1s ease;
+                -o-transition: all 1s ease;
+                -webkit-transition: all 1s ease;
+                transition: all 1s ease;
+                vertical-align: top;
+                width: 100%;
+                height: 850px;
+            }
+            /*
+            input {
+                border: 1px solid #d9d9d9;
+                border-radius: 1px;
+                font-size: 2em;
+                margin: .2em;
+                width: 30%;
+            }
+            select {
+                border: 1px solid #d9d9d9;
+                border-radius: 1px;
+                height: 50px;
+                margin-left: 1em;
+                margin-right: -12px;
+                padding: 1.1em;
+                vertical-align: 6px;
+                width: 18%;
+            }
+            .setup {
+                border-bottom-left-radius: 0;
+                border-top-left-radius: 0;
+                font-size: 102%;
+                height: 47px;
+                margin-left: -9px;
+                margin-top: 8px;
+                position: absolute;
+            }
+            p { padding: 1em; }
+            li {
+                border-bottom: 1px solid rgb(189, 189, 189);
+                border-left: 1px solid rgb(189, 189, 189);
+                padding: .5em;
+            }*/
+        </style>
+
+
+
+
+
+
+
+<link rel="stylesheet" type="text/css" href="gm4.css"/> <!-- CSS속성적용 --> 
+
+<title>사이트 주소</title>
+
+
+</head>
+<body>
+
+
+<!-- 화면 전체 레이아웃 -->
+<div class="room" data-room-mode="call" data-user-screenshare="false" data-right-side-on="false" data-subvideo-direction="0">
+<div class="room-wrapper">
+
+<!-- 왼쪽 레이아웃 -->
+<div class="room-menu">
+<div class="bo-detail1">
+ <div class="canv">
+ <canvas id="canvas" width="600" height="800">
+</canvas>
+</div>
+<br/>
+<div>
+<input type="file" id="loadImg" ><br/>
+mode : <span id="mode" ></span><br/>
+
+<input type="button" value="pen" onclick="changeMode(0)">
+<input type="button" value="line" onclick="changeMode(1)">
+<input type="button" value="rect" onclick="changeMode(2)">
+<input type="button" value="delete" onclick="ccan()"><br>
+<input type="button" value="save" onclick="save()">
+<textarea rows="" cols="" id="data"></textarea>
+ 
+ </div>
+ </div>
+</div>
+
+<!-- 영상 부분 -->
+<div class="room-main">
+<div class="room-main-top">
+<div class="bu">
+<form>
+			<p>
+			<a href="#"><img src="com.png" width="50" height="35" onMouseOver="this.className='bg1'" onMouseOut="this.className='bg2'"></a>
+			<a href="#"><img src="screen.png" width="50" height="35" onMouseOver="this.className='bg1'" onMouseOut="this.className='bg2'"></a>
+			<a href="#"><img src="mic.png" width="50" height="35" onMouseOver="this.className='bg1'" onMouseOut="this.className='bg2'"></a>
+			<a href="#"><img src="sound.png" width="50" height="35" onMouseOver="this.className='bg1'" onMouseOut="this.className='bg2'"></a>
+			<a href="#"><img src="set.png" width="50" height="35" onMouseOver="this.className='bg1'" onMouseOut="this.className='bg2'"></a>
+			<a href="#"><img src="end.png" width="50" height="35" onMouseOver="this.className='bg1'" onMouseOut="this.className='bg2'"></a>
+			
+			</p>
+			</form>
+</div>
+<div class="ti">
+
+
+<form name="timeform" action="">
+<!-- 
+   <div id="blinker" class="green_circle">
+   </div>
+     -->
+   <div id="clock">
+      <input name="timeleft" size="5" class="c1" type="text">
+   </div>
+
+   <div class="settimer">
+   <!-- 
+      Time:
+      <input name="hours" value="" size="1" class="c2" type="text">
+         -->
+      Minute:
+      <input name="minutes" value="" size="1" class="c2" type="text">
+     <!-- 
+      Warning(in minutes):
+      <input name="warn" value="" size="1" class="c2" type="text">
+         -->
+      <input name="start" value="Start" class="c2"
+         onclick="sw_start()" type="button">
+      <input name="stop" value="Stop" class="c2"
+         onclick="Stop()" type="button">
+      <input name="reset" value="Reset" class="c2"
+         onclick="Reset()" type="button">
+   </div>
+</form>
+
+
+</div>
+
+
+
+</div>
+
+
+<div class="room-con">
+	
+	
+	
+	
+	<div class="eva">
+		<div class="eva-head">질문 제목 영역</div>
+		<div class="eva-con">
+<textarea maxlength="5000" class="eva-msg" placeholder="평가 내용을 입력하세요" ></textarea>
+
+</div>
+		<div class="eva-foot">
+		<p>
+			<a href="#"><input type="button" style="width:100px; height:40px;" value="send"></a>
+
+			</p>
+		
+		</div>
+	
+	</div>
+
+
+
+
+</div>
+</div>
+
+
+<!-- 채팅 부분  -->
+
+<div class="room-right-side">
+	
+	
+
+
+
+       
+
+            <section class="experiment">
+                <section>
+                    <span>
+                        Private ?? <a href="/screen-sharing/" target="_blank" title="Open this link for private screen sharing!"><code><strong id="unique-token">#123456789</strong></code></a>
+                    </span>
+                    <input type="text" id="user-name" placeholder="Your Name">
+                    <button id="share-screen" class="setup">Share OK</button>
+                </section>
+
+
+                <table style="width: 100%;" id="rooms-list"></table>
+
+
+                <div id="videos-container"></div>
+            </section>
+
+            <script>
+                function intallFirefoxScreenCapturingExtension() {
+                    InstallTrigger.install({
+                        'Foo': {
+                            // URL: 'https://addons.mozilla.org/en-US/firefox/addon/enable-screen-capturing/',
+                            URL: 'https://addons.mozilla.org/firefox/downloads/file/355418/enable_screen_capturing_in_firefox-1.0.006-fx.xpi?src=cb-dl-hotness',
+                            toString: function() {
+                                return this.URL;
+                            }
+                        }
+                    });
+                }
+                // Muaz Khan     - https://github.com/muaz-khan
+                // MIT License   - https://www.webrtc-experiment.com/licence/
+                // Documentation - https://github.com/muaz-khan/WebRTC-Experiment/tree/master/screen-sharing
+                var videosContainer = document.getElementById("videos-container") || document.body;
+                var roomsList = document.getElementById('rooms-list');
+                var screensharing = new Screen();
+                screensharing.onscreen = function(_screen) {
+                    var alreadyExist = document.getElementById(_screen.userid);
+                    if (alreadyExist) return;
+                    if (typeof roomsList === 'undefined') roomsList = document.body;
+                    var tr = document.createElement('tr');
+                    tr.id = _screen.userid;
+                    tr.innerHTML = '<td>' + _screen.userid + ' shared his screen.</td>' +
+                            '<td><button class="join">Preview His Screen</button></td>';
+                    roomsList.insertBefore(tr, roomsList.firstChild);
+                    var button = tr.querySelector('.join');
+                    button.setAttribute('data-userid', _screen.userid);
+                    button.setAttribute('data-roomid', _screen.roomid);
+                    button.onclick = function() {
+                        var button = this;
+                        button.disabled = true;
+                        var _screen = {
+                            userid: button.getAttribute('data-userid'),
+                            roomid: button.getAttribute('data-roomid')
+                        };
+                        screensharing.view(_screen);
+                    };
+                };
+                // on getting each new screen
+                screensharing.onaddstream = function(media) {
+                    media.video.id = media.userid;
+                    var video = media.video;
+                    video.setAttribute('controls', true);
+                    videosContainer.insertBefore(video, videosContainer.firstChild);
+                    video.play();
+                    rotateVideo(video);
+                };
+                // using firebase for signaling
+                // screen.firebase = 'signaling';
+                // if someone leaves; just remove his screen
+                screensharing.onuserleft = function(userid) {
+                    var video = document.getElementById(userid);
+                    if (video && video.parentNode) video.parentNode.removeChild(video);
+                };
+                // check pre-shared screens
+                screensharing.check();
+                document.getElementById('share-screen').onclick = function() {
+                    screensharing.share();
+                    this.disabled = true;
+                };
+                document.getElementById('share-screen').onclick = function() {
+                    var username = document.getElementById('user-name');
+                    username.disabled = this.disabled = true;
+                    screensharing.isModerator = true;
+                    screensharing.userid = username.value;
+                    screensharing.share();
+                };
+                function rotateVideo(video) {
+                    video.style[navigator.mozGetUserMedia ? 'transform' : '-webkit-transform'] = 'rotate(0deg)';
+                    setTimeout(function() {
+                        video.style[navigator.mozGetUserMedia ? 'transform' : '-webkit-transform'] = 'rotate(360deg)';
+                    }, 1000);
+                }
+                (function() {
+                    var uniqueToken = document.getElementById('unique-token');
+                    if (uniqueToken)
+                        if (location.hash.length > 2) uniqueToken.parentNode.parentNode.parentNode.innerHTML = '<h2 style="text-align:center;"><a href="' + location.href + '" target="_blank">Screen Share</a></h2>';
+                        else uniqueToken.innerHTML = uniqueToken.parentNode.parentNode.href = '#' + (Math.random() * new Date().getTime()).toString(36).toUpperCase().replace( /\./g , '-');
+                })();
+                screensharing.onNumberOfParticipantsChnaged = function(numberOfParticipants) {
+                    if(!screensharing.isModerator) return;
+                    document.title = numberOfParticipants + ' users are viewing your screen!';
+                    var element = document.getElementById('number-of-participants');
+                    if (element) {
+                        element.innerHTML = numberOfParticipants + ' users are viewing your screen!';
+                    }
+                };
+            </script>
+
+            <script>
+                // todo: need to check exact chrome browser because opera also uses chromium framework
+                var isChrome = !!navigator.webkitGetUserMedia;
+                // DetectRTC.js - https://github.com/muaz-khan/WebRTC-Experiment/tree/master/DetectRTC
+                // Below code is taken from RTCMultiConnection-v1.8.js (http://www.rtcmulticonnection.org/changes-log/#v1.8)
+                var DetectRTC = {};
+                (function () {
+                    var screenCallback;
+                    DetectRTC.screen = {
+                        chromeMediaSource: 'screen',
+                        getSourceId: function(callback) {
+                            if(!callback) throw '"callback" parameter is mandatory.';
+                            screenCallback = callback;
+                            window.postMessage('get-sourceId', '*');
+                        },
+                        isChromeExtensionAvailable: function(callback) {
+                            if(!callback) return;
+                            if(DetectRTC.screen.chromeMediaSource == 'desktop') return callback(true);
+                            // ask extension if it is available
+                            window.postMessage('are-you-there', '*');
+                            setTimeout(function() {
+                                if(DetectRTC.screen.chromeMediaSource == 'screen') {
+                                    callback(false);
+                                }
+                                else callback(true);
+                            }, 2000);
+                        },
+                        onMessageCallback: function(data) {
+                            if (!(typeof data == 'string' || !!data.sourceId)) return;
+                            console.log('chrome message', data);
+                            // "cancel" button is clicked
+                            if(data == 'PermissionDeniedError') {
+                                DetectRTC.screen.chromeMediaSource = 'PermissionDeniedError';
+                                if(screenCallback) return screenCallback('PermissionDeniedError');
+                                else throw new Error('PermissionDeniedError');
+                            }
+                            // extension notified his presence
+                            if(data == 'rtcmulticonnection-extension-loaded') {
+                                if(document.getElementById('install-button')) {
+                                    document.getElementById('install-button').parentNode.innerHTML = '<strong>Great!</strong> <a href="https://chrome.google.com/webstore/detail/screen-capturing/ajhifddimkapgcifgcodmmfdlknahffk" target="_blank">Google chrome extension</a> is installed.';
+                                }
+                                DetectRTC.screen.chromeMediaSource = 'desktop';
+                            }
+                            // extension shared temp sourceId
+                            if(data.sourceId) {
+                                DetectRTC.screen.sourceId = data.sourceId;
+                                if(screenCallback) screenCallback( DetectRTC.screen.sourceId );
+                            }
+                        },
+                        getChromeExtensionStatus: function (callback) {
+                            if (!!navigator.mozGetUserMedia) return callback('not-chrome');
+                            var extensionid = 'ajhifddimkapgcifgcodmmfdlknahffk';
+                            var image = document.createElement('img');
+                            image.src = 'chrome-extension://' + extensionid + '/icon.png';
+                            image.onload = function () {
+                                DetectRTC.screen.chromeMediaSource = 'screen';
+                                window.postMessage('are-you-there', '*');
+                                setTimeout(function () {
+                                    if (!DetectRTC.screen.notInstalled) {
+                                        callback('installed-enabled');
+                                    }
+                                }, 2000);
+                            };
+                            image.onerror = function () {
+                                DetectRTC.screen.notInstalled = true;
+                                callback('not-installed');
+                            };
+                        }
+                    };
+                    // check if desktop-capture extension installed.
+                    if(window.postMessage && isChrome) {
+                        DetectRTC.screen.isChromeExtensionAvailable();
+                    }
+                })();
+                DetectRTC.screen.getChromeExtensionStatus(function(status) {
+                    if(status == 'installed-enabled') {
+                        if(document.getElementById('install-button')) {
+                            document.getElementById('install-button').parentNode.innerHTML = '<strong>Great!</strong> <a href="https://chrome.google.com/webstore/detail/screen-capturing/ajhifddimkapgcifgcodmmfdlknahffk" target="_blank">Google chrome extension</a> is installed.';
+                        }
+                        DetectRTC.screen.chromeMediaSource = 'desktop';
+                    }
+                });
+                window.addEventListener('message', function (event) {
+                    if (event.origin != window.location.origin) {
+                        return;
+                    }
+                    DetectRTC.screen.onMessageCallback(event.data);
+                });
+                console.log('current chromeMediaSource', DetectRTC.screen.chromeMediaSource);
+            </script>
+
+            <section class="experiment">
+                <h2>설치</h2>
+                <ol>
+                    <li>
+                        Chrome
+                        <a href="https://chrome.google.com/webstore/detail/screen-capturing/ajhifddimkapgcifgcodmmfdlknahffk" target="_blank">Store</a>  
+                        /
+                        <button onclick="!!navigator.webkitGetUserMedia && !!window.chrome && !!chrome.webstore && !!chrome.webstore.install && chrome.webstore.install('https://chrome.google.com/webstore/detail/ajhifddimkapgcifgcodmmfdlknahffk', function() {location.reload();})" id="install-button" style="font-size:inherit; padding-bottom:0;">Click to Install</button>
+                    </li>
+
+                </ol>
+            </section>
+
+
+
+
+
+
+				
+		
+				
+			</div>
+
+
+
+</div>
+</div>
+
+
+</body>
+</html>
