@@ -1,0 +1,212 @@
+<!DOCTYPE html>
+<html lang="ko">
+
+<head>
+
+
+
+
+
+	<meta charset="utf-8">
+	<meta http-equiv="Content-Type" content="text/html; charset=unicode" />
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<meta name="viewport" content="user-scalable=no, width=device-width, height=device-height, initial-scale=1, maximum-scale=1">
+
+
+<script type="text/javascript" src="sh_canvas.js"></script>
+
+<link rel="stylesheet" type="text/css" href="css/gm.css"/> <!-- CSS속성적용 --> 
+<meta charset="UTF-8">
+<title>면접자 화면</title>
+
+
+
+<style>
+ input.form-text {
+        border: 1px solid #bcbcbc;
+        width: 50%;
+        height: 20px;
+      }
+
+</style>
+<style type="text/css">
+            #demoContainer {
+                position:relative;
+            }
+            #connectControls {
+                float:left;
+                width:250px;
+                text-align:center;
+                border: 2px solid black;
+            }
+            #otherClients {
+                height:200px;
+                overflow-y:scroll;
+            }
+            #selfVideo {
+                height:225px;
+                width:300px;
+                float:left;
+                border:1px solid gray;
+                margin-left:10px;
+            }
+            #callerVideo {
+                height:225px;
+                width:300px;
+                border:1px solid gray;
+                margin-left:10px;
+            }
+            #acceptCallBox {
+                display:none;
+                z-index:2;
+                position:absolute;
+                top:100px;
+                left:400px;
+                border:red solid 2px;
+                background-color:pink;
+                padding:15px;
+            }
+
+        </style>
+        <script src="/socket.io/socket.io.js"></script>
+        <script type="text/javascript" src="/easyrtc/easyrtc.js"></script>
+        <script type="text/javascript" src="js/demo_multistream.js"></script>
+        <link rel="stylesheet" type="text/css" href="/easyrtc/easyrtc.css" />
+        <!--hide-->
+        <link rel="stylesheet" type="text/css" href="css/landing.css" />
+
+</head>
+<body>
+
+
+<!-- 화면 전체 레이아웃 -->
+<div class="room" data-room-mode="call" data-user-screenshare="false" data-right-side-on="false" data-subvideo-direction="0">
+<div class="room-wrapper">
+
+<!-- 왼쪽 레이아웃 -->
+<div class="room-menu">
+<div class="bo-detail1">
+ <div class="canv">
+ <canvas id="canvas" width="760" height="730">
+</canvas>
+<div id="connectControls">
+                        <button id="connectButton" onclick="connect()">Connect</button>
+                        <button id="hangupButton" disabled="disabled" onclick="hangup()">Hangup</button>
+                        <div id="iam">Not yet connected...</div>
+                        <H3> Video sources</h3>
+                        <div id="videoSrcBlk">
+                            
+                        </div>
+                        
+                        <br />
+                        <strong>Connected users:</strong>
+                        <div id="otherClients"></div>
+                    </div>    
+</div>
+<br/>
+<div>
+<input type="file" id="loadImg" ><br/>
+mode : <span id="mode" ></span><br/>
+
+<input type="button" value="pen" onclick="changeMode(0)">
+<input type="button" value="line" onclick="changeMode(1)">
+<input type="button" value="rect" onclick="changeMode(2)">
+<input type="button" value="delete" onclick="ccan()"><br>
+<input type="button" value="save" onclick="save()">
+<textarea rows="" cols="" id="data"></textarea>
+ 
+ </div>
+ </div>
+</div>
+
+
+<div class="room-main">
+<div class="room-main-top">
+<form>
+			<p>
+			<a href="#"><img src="com.png" width="50" height="37"></a>
+			<a href="#"><img src="screen.png" width="50" height="37"></a>
+			<a href="#"><img src="mic.png" width="50" height="37"></a>
+			<a href="#"><img src="sound.png" width="50" height="37"></a>
+			<a href="#"><img src="set.png" width="50" height="37"></a>
+			<a href="#"><img src="end.png" width="50" height="37"></a>
+			</p>
+			</form>
+
+</div>
+
+
+<div class="room-con">
+<div class="con1"> 
+<ul class="bo-list-row">
+	    			<div id="videos">
+                    <h3>Local media streams</h3>
+                        <div autoplay="autoplay" id="localVideos"></div>
+                </div>			
+		    </ul>
+
+
+</div>
+<div class="con2"><ul class="bo-list-row">
+	    		<div id="videos">
+                    <h3>Remote media streams</h3>
+                    <div autoplay = "autoplay" id="remoteVideos"></div>
+                </div>
+	
+				
+		    </ul></div>
+<div class="con3"><ul class="bo-list-row">
+	    			<li></li>
+	    			<li></li>
+	    			<li></li>
+	    			<li></li>
+	    			<li></li>
+	    			<li></li>
+	    			<li></li>
+	    			<li></li>
+	    			<li></li>
+	    			<li></li>
+	    			<li></li>
+	    			<li></li>
+	    			<li></li>
+					<li>3번 화면</li>
+					<div id="videos">
+                        <div id="acceptCallBox"> <!-- Should be initially hidden using CSS -->
+                            <div id="acceptCallLabel"></div>
+                            <button id="callAcceptButton" >Accept</button> <button id="callRejectButton">Reject</button>
+                        </div>
+                    </div>
+				
+		    </ul></div>
+<div class="con4"><ul class="bo-list-row">
+	    			<li></li>
+	    			<li></li>
+	    			<li></li>
+	    			<li></li>
+	    			<li></li>
+	    			<li></li>
+	    			<li></li>
+	    			<li></li>
+	    			<li></li>
+	    			<li></li>
+	    			<li></li>
+	    			<li></li>
+	    			<li></li>
+					<li>4번 화면</li>
+	
+				
+		    </ul></div>
+</div>
+
+
+</div>
+
+
+
+
+</div>
+</div>
+
+
+</body>
+</html>

@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <meta charset="utf-8">
+    <link rel="stylesheet" href="https://cdn.webrtc-experiment.com/style.css">
+
+    <title>PubNub Video Conferencing Demo using RTCMultiConnection</title>
+
+    <meta name="description" content="Use PubNub as a signaling medium with RTCMultiConnection" />
+    <meta name="keywords" content="WebRTC,RTCMultiConnection,Demos,Experiments,Samples,Examples" />
+
+    <style>
+        video {
+            object-fit: fill;
+            width: 30%;
+        }
+        button,
+        input,
+        select {
+            font-weight: normal;
+            padding: 2px 4px;
+            text-decoration: none;
+            display: inline-block;
+            text-shadow: none;
+            font-size: 16px;
+            outline: none;
+        }
+        .make-center {
+            text-align: center;
+            padding: 5px 10px;
+        }
+    </style>
+</head>
+
+<body>
+    <article>   
+                <input type="text" id="room-id">
+                <button id="open-room">Open Room</button>
+                <button id="join-room">Join Room</button>
+
+                <br><br>
+        
+
+            <div id="videos-container"></div>
+     
+
+        <script src="/RTCMultiConnection.min.js"></script>
+        <script src="/PubNubConnection.js"></script>
+        <script src="/test.js"></script>
+        <script src="https://cdn.webrtc-experiment.com:443/FileBufferReader.js"></script>
+
+        <script src="https://cdn.webrtc-experiment.com/view/websocket.js"></script>
+
+      
+        <script src="https://cdn.webrtc-experiment.com/commits.js" async></script>
+
+    </article>
+
+
+</body>
+
+</html>

@@ -52,15 +52,6 @@
                 }, 5000);
             };
 
-            connection.videosContainer = document.getElementById('videos-container2');
-            connection.onstream = function(event) {
-                connection.videosContainer.appendChild(event.mediaElement);
-                event.mediaElement.play();
-                setTimeout(function() {
-                    event.mediaElement.play();
-                }, 5000);
-            };
-
             connection.onmessage = appendDIV;
             connection.filesContainer = document.getElementById('file-container');
 
